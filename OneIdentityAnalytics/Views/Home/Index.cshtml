@@ -1,0 +1,16 @@
+﻿@using System.Security.Principal
+
+@if (User.Identity.IsAuthenticated)
+{
+<div class="jumbotron">
+    <h1>Welcome @User.FindFirst("name").Value</h1>
+
+</div> }
+else
+{
+<div class="jumbotron">
+
+    <h1>Welcome to the App-Owns-Data Starter Kit</h1>
+    <p>Click the <strong>sign in</strong> link in the upper right to get started.</p>
+
+</div>}
