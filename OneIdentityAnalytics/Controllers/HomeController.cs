@@ -61,7 +61,7 @@ namespace OneIdentityAnalytics.Controllers
             var model = new OnboardTenantModel
             {
                 TenantName = this.AppOwnsDataDBService.GetNextTenantName(),
-                SuggestedDatabase = "WingtipSales",
+                SuggestedDatabase = "SEACDEV01",
                 DatabaseOptions = new List<SelectListItem> {
           new SelectListItem{ Text="AcmeCorpSales", Value="AcmeCorpSales" },
           new SelectListItem{ Text="ContosoSales", Value="ContosoSales" },

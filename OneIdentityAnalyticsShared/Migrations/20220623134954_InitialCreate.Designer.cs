@@ -10,7 +10,7 @@ using OneIdentityAnalyticsShared.Models;
 namespace OneIdentityAnalyticsShared.Migrations
 {
     [DbContext(typeof(OneIdentityAnalyticsDB))]
-    [Migration("20220622134730_InitialCreate")]
+    [Migration("20220623134954_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

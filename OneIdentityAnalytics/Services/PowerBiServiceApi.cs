@@ -17,6 +17,7 @@ using Microsoft.Rest;
 using OneIdentityAnalyticsShared.Models;
 using Microsoft.Identity.Web;
 using OneIdentityAnalyticsShared.Services;
+using System.Diagnostics;
 
 namespace OneIdentityAnalytics.Services
 {
@@ -140,8 +141,9 @@ namespace OneIdentityAnalytics.Services
             }
 
             // upload sample PBIX file #1
-            string pbixPath = this.Env.WebRootPath + @"/PBIX/SalesReportTemplate.pbix";
-            string importName = "Customers";
+           // string pbixPath = this.Env.WebRootPath + @"/PBIX/SalesReportTemplate.pbix";
+            string pbixPath = this.Env.WebRootPath + @"/PBIX/test_Oneidentity_person.pbix";
+            string importName = "UNSAccountB";
             PublishPBIX(pbiClient, workspace.Id, pbixPath, importName);
 
             Dataset dataset = GetDataset(pbiClient, workspace.Id, importName);
@@ -151,7 +153,7 @@ namespace OneIdentityAnalytics.Services
           new UpdateMashupParameterDetails { Name = "DatabaseServer", NewValue = tenant.DatabaseServer },
           new UpdateMashupParameterDetails { Name = "DatabaseName", NewValue = tenant.DatabaseName }
             });
-            //Console.WriteLine("1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!test////////////////////////////");
+            
 
             pbiClient.Datasets.UpdateParametersInGroup(workspace.Id, dataset.Id, req);
 
