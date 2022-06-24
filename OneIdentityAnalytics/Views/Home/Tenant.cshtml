@@ -82,6 +82,7 @@
         <tr>
           <th>Name</th>
           <th>Is Refreshable</th>
+            <th>ID</th>
         </tr>
       </thead>
       @foreach (var dataset in Model.Datasets) {
@@ -95,12 +96,13 @@
   </div>
   
   <div class="col-3">
-      <h4>Report</h4>
+      <h4>Reports</h4>
       <table class="table table-sm table-bordered table-striped">
           <thead class="thead-dark">
               <tr>
                   <th>Name</th>
                   <th>Report Type</th>
+                  <th>ID</th>
               </tr>
           </thead>
           @foreach (var report in Model.Reports)

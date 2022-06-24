@@ -143,23 +143,23 @@ namespace OneIdentityAnalytics.Services
             // upload sample PBIX file #1
            // string pbixPath = this.Env.WebRootPath + @"/PBIX/SalesReportTemplate.pbix";
             string pbixPath = this.Env.WebRootPath + @"/PBIX/test_Oneidentity_person.pbix";
-            string importName = "UNSAccountB";
+            string importName = "Person_roles";
             PublishPBIX(pbiClient, workspace.Id, pbixPath, importName);
 
             Dataset dataset = GetDataset(pbiClient, workspace.Id, importName);
 
-            UpdateMashupParametersRequest req =
-              new UpdateMashupParametersRequest(new List<UpdateMashupParameterDetails>() {
-          new UpdateMashupParameterDetails { Name = "DatabaseServer", NewValue = tenant.DatabaseServer },
-          new UpdateMashupParameterDetails { Name = "DatabaseName", NewValue = tenant.DatabaseName }
-            });
+          //  UpdateMashupParametersRequest req =
+          //    new UpdateMashupParametersRequest(new List<UpdateMashupParameterDetails>() {
+          //new UpdateMashupParameterDetails { Name = "DatabaseServer", NewValue = tenant.DatabaseServer },
+          //new UpdateMashupParameterDetails { Name = "DatabaseName", NewValue = tenant.DatabaseName }
+          //  });
             
 
-            pbiClient.Datasets.UpdateParametersInGroup(workspace.Id, dataset.Id, req);
+          //  pbiClient.Datasets.UpdateParametersInGroup(workspace.Id, dataset.Id, req);
 
-            PatchSqlDatasourceCredentials(pbiClient, workspace.Id, dataset.Id, tenant.DatabaseUserName, tenant.DatabaseUserPassword);
+          //  PatchSqlDatasourceCredentials(pbiClient, workspace.Id, dataset.Id, tenant.DatabaseUserName, tenant.DatabaseUserPassword);
 
-            pbiClient.Datasets.RefreshDatasetInGroup(workspace.Id, dataset.Id);
+          //  pbiClient.Datasets.RefreshDatasetInGroup(workspace.Id, dataset.Id);
 
             return tenant;
         }
