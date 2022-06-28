@@ -31,6 +31,14 @@ namespace OneIdentityAnalytics.Services
         public string TenantName;
     }
 
+    public class EmbeddedDashboardViewModel
+    {
+        public string DashboardId { get; set; }
+        public string Name { get; set; }
+        public string EmbedUrl { get; set; }
+        public string Token { get; set; }
+
+    }
     public class PowerBiTenantDetails : PowerBiTenant
     {
         public IList<Report> Reports { get; set; }
@@ -97,6 +105,31 @@ namespace OneIdentityAnalytics.Services
                 Token = embedToken
             };
         }
+        //public async Task<EmbeddedReportViewModel> GetDashboard(Guid WorkspaceId, Guid DashboardId)
+        //{
+
+        //    PowerBIClient pbiClient = GetPowerBiClient();
+
+        //    // call to Power BI Service API to get embedding data
+        //    var dashboard = await pbiClient.Dashboards.GetDashboardAsync(WorkspaceId, DashboardId);
+
+        //    //var dashboard = await pbiClient.Reports.GetReportInGroupAsync(WorkspaceId, ReportId);
+
+        //    // generate read-only embed token for the report
+        //    var datasetId = report.DatasetId;
+        //    var tokenRequest = new GenerateTokenRequest(TokenAccessLevel.View, datasetId);
+        //    var embedTokenResponse = await pbiClient.Reports.GenerateTokenAsync(WorkspaceId, ReportId, tokenRequest);
+        //    var embedToken = embedTokenResponse.Token;
+
+        //    // return report embedding data to caller
+        //    return new EmbeddedDashboardViewModel
+        //    {
+        //        ReportId = report.Id.ToString(),
+        //        EmbedUrl = report.EmbedUrl,
+        //        Name = report.Name,
+        //        Token = embedToken
+        //    };
+        //}
 
         public Dataset GetDataset(PowerBIClient pbiClient, Guid WorkspaceId, string DatasetName)
         {
@@ -258,34 +291,67 @@ namespace OneIdentityAnalytics.Services
             };
 
         }
-
-        public async Task<EmbeddedReportViewModel> GetReportEmbeddingData(string AppIdentity, string Tenant)
+        
+        public Task<EmbeddedReportViewModel> GetReportEmbeddingData(string AppIdentity, Guid ReportId, string Tenant)
         {
 
             PowerBIClient pbiClient = GetPowerBiClient();
 
             var tenant = this.OneIdentityAnalyticsDBService.GetTenant(Tenant);
             Guid workspaceId = new Guid(tenant.WorkspaceId);
-            var reports = (await pbiClient.Reports.GetReportsInGroupAsync(workspaceId)).Value;
+            //var reports = (await pbiClient.Reports.GetReportsInGroupAsync(workspaceId)).Value;
 
-            var report = reports.Where(report => report.Name.Equals("Sales")).First();
-
+            var report = pbiClient.Reports.GetReport(workspaceId, ReportId);
+            //Trace.WriteLine(report);
             GenerateTokenRequest generateTokenRequestParameters = new GenerateTokenRequest(accessLevel: "View");
 
             // call to Power BI Service API and pass GenerateTokenRequest object to generate embed token
             string embedToken = pbiClient.Reports.GenerateTokenInGroup(workspaceId, report.Id,
                                                                        generateTokenRequestParameters).Token;
-
-            return new EmbeddedReportViewModel
+            
+            return Task.FromResult(new EmbeddedReportViewModel
             {
                 ReportId = report.Id.ToString(),
                 Name = report.Name,
                 EmbedUrl = report.EmbedUrl,
                 Token = embedToken,
                 TenantName = Tenant
+            });
+           
+        }
+        public async Task<EmbeddedDashboardViewModel> GetDashboardEmbeddingData(Guid dashboardid, string Tenant)
+        {
+
+            PowerBIClient pbiClient = GetPowerBiClient();
+
+             var tenant = this.OneIdentityAnalyticsDBService.GetTenant(Tenant);
+
+            //workspaceId = new Guid("f1e6d5b1-f653-465e-8858-a65a015c5446");
+             Guid workspaceId = new Guid(tenant.WorkspaceId);
+            //var dashboards = (await pbiClient.Dashboards.GetDashboardsInGroupAsync(workspaceId));
+            //var report = reports.Where(report => report.Name.Equals("Person_roles")).First();
+            var dashboard = pbiClient.Dashboards.GetDashboard(workspaceId, dashboardid);
+            //var dashboard = dashboards.Value.ElementAtOrDefault();
+            //var dashboard = dashboards.Value.Where(dashboard => dashboard.Id.Equals(dashboardid)).FirstOrDefault();
+
+            //var dashboard = dashboards.Where(dashboard => dashboard.Name.Equals("Person_roles")).First();
+
+            GenerateTokenRequest generateTokenRequestParameters = new GenerateTokenRequest(accessLevel: "View");
+            
+            // call to Power BI Service API and pass GenerateTokenRequest object to generate embed token
+            string embedToken = pbiClient.Dashboards.GenerateTokenInGroup(workspaceId, dashboard.Id,
+                                                                       generateTokenRequestParameters).Token;
+
+            return new EmbeddedDashboardViewModel
+            {
+                DashboardId = dashboard.Id.ToString(),
+                EmbedUrl = dashboard.EmbedUrl,
+                Token = embedToken,
+                
             };
 
         }
+
 
 
     }

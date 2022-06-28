@@ -100,9 +100,17 @@ namespace OneIdentityAnalytics.Controllers
             return RedirectToAction("Tenants");
         }
 
-        public IActionResult Embed(string AppIdentity, string Tenant)
+        public IActionResult Embed(string AppIdentity, string ReportId, string Tenant)
         {
-            var viewModel = this.powerBiServiceApi.GetReportEmbeddingData(AppIdentity, Tenant).Result;
+            var ReporttId = new Guid(ReportId);
+            var viewModel = this.powerBiServiceApi.GetReportEmbeddingData(AppIdentity, ReporttId,Tenant).Result;
+            return View(viewModel);
+        }
+        public IActionResult EmbedDash(string dashboardid, string workspaceId, string Tenant)
+        {
+            var dashboarddid = new Guid(dashboardid);
+            //var workkspaceId = new Guid(workspaceId);
+            var viewModel = this.powerBiServiceApi.GetDashboardEmbeddingData(dashboarddid, Tenant).Result;
             return View(viewModel);
         }
 
@@ -178,6 +186,7 @@ namespace OneIdentityAnalytics.Controllers
             this.AppOwnsDataDBService.DeleteUser(user);
             return RedirectToAction("Users");
         }
+ 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

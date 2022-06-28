@@ -22,6 +22,7 @@ namespace OneIdentityAnalyticsShared.Models
         public string DatabaseUserPassword { get; set; }
     }
 
+
     public class User
     {
         [Key]

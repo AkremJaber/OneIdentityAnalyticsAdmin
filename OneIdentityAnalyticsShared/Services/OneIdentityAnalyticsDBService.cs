@@ -50,7 +50,7 @@ namespace OneIdentityAnalyticsShared.Services
 
         public PowerBiTenant GetTenant(string TenantName)
         {
-            var tenant = dbContext.Tenants.Where(tenant => tenant.Name == TenantName).First();
+            var tenant = dbContext.Tenants.Where(tenant => tenant.Name == TenantName).FirstOrDefault();
             return tenant;
         }
 

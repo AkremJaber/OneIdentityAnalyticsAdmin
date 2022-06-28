@@ -1,22 +1,22 @@
 ﻿@model OneIdentityAnalytics.Services.EmbeddedReportViewModel
 
 <h2>
-  <span><a class="btn btn-sm h2-backarrow" asp-action="Tenants"><i class="fa fa-backward"></i></a></span>
-  <span>Report for @Model.TenantName</span>
+    <span><a class="btn btn-sm h2-backarrow" asp-action="Tenants"><i class="fa fa-backward"></i></a></span>
+    <span>Edit Report for @Model.TenantName</span>
 </h2>
 
 <div class="container">
-  <div class="row">
-    <div id="report-container" style="width:1000px;height:600px;"></div>
-  </div>
+    <div class="row">
+        <div id="report-container"></div>
+    </div>
 </div>
 
 
 @section Scripts {
 
-  <script src="~/lib/powerbi-client/dist/powerbi.min.js"></script>
+    <script src="~/lib/powerbi-client/dist/powerbi.min.js"></script>
 
-  <script type="text/javascript">
+    <script type="text/javascript">
     $(function () {
 
       var reportEmbedData = {
@@ -76,5 +76,5 @@
       });
 
     });
-  </script>
+    </script>
 }
