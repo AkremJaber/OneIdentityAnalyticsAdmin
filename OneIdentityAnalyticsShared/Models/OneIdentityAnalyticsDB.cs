@@ -22,6 +22,20 @@ namespace OneIdentityAnalyticsShared.Models
         public string DatabaseUserPassword { get; set; }
     }
 
+    public class Person
+    {
+        [Key] 
+        public string UID_Person { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+    public class PersonInAERole
+    {
+        [Key]
+        public  string UID_Person { get; set; }
+        public string UID_AERole{ get; set; }
+        public string XObjectKey{ get; set; }
+    }
 
     public class User
     {
@@ -59,6 +73,9 @@ namespace OneIdentityAnalyticsShared.Models
 
         public DbSet<PowerBiTenant> Tenants { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Person> Person { get; set; }
+        public DbSet<PersonInAERole> PersonInAERole { get; set; }
+
         public DbSet<ActivityLogEntry> ActivityLog { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

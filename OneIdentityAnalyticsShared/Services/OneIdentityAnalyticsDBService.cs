@@ -85,6 +85,21 @@ namespace OneIdentityAnalyticsShared.Services
             var user = dbContext.Users.Where(user => user.LoginId == LoginId).First();
             return user;
         }
+     
+        public IList<Person> GetPersons()
+        {
+            return dbContext.Person
+                   .Select(person => person)
+                  // .OrderByDescending(person => user.LastLogin)
+                   .ToList();
+        }
+        public IList<PersonInAERole> GetPersonInAERole()
+        {
+            return dbContext.PersonInAERole
+                   .Select(personinae => personinae)
+                   // .OrderByDescending(person => user.LastLogin)
+                   .ToList();
+        }
 
         public User UpdateUser(User currentUser)
         {
@@ -98,7 +113,7 @@ namespace OneIdentityAnalyticsShared.Services
             {
                 user = new User();
             }
-            user.UserName = currentUser.UserName;
+          //  user.UserName = currentUser.UserName;
             user.CanEdit = currentUser.CanEdit;
             user.CanCreate = currentUser.CanCreate;
             user.TenantName = currentUser.TenantName;
@@ -120,7 +135,7 @@ namespace OneIdentityAnalyticsShared.Services
                 user.Created = DateTime.Now;
             }
             user.LoginId = newUser.LoginId;
-            user.UserName = !string.IsNullOrEmpty(newUser.UserName) ? newUser.UserName : user.UserName;
+          //  user.UserName = !string.IsNullOrEmpty(newUser.UserName) ? newUser.UserName : user.UserName;
             user.TenantName = !string.IsNullOrEmpty(newUser.TenantName) ? newUser.TenantName : user.TenantName;
             user.CanEdit = newUser.CanEdit;
             user.CanCreate = newUser.CanCreate;

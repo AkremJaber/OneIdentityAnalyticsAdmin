@@ -1,0 +1,23 @@
+﻿@model IList<OneIdentityAnalyticsShared.Models.Person>
+
+<H2>Persons</H2>
+
+
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>FirstName</th>
+            <th>LastName</th>
+         
+        </tr>
+    </thead>
+    @foreach (var person in Model)
+    {
+<tr>
+    <td>@person.FirstName</td>
+    <td>@person.LastName</td>
+
+
+  </tr>}
+</table>

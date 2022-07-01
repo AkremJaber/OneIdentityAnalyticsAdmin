@@ -110,7 +110,7 @@ namespace OneIdentityAnalytics.Controllers
         {
             var dashboarddid = new Guid(dashboardid);
             //var workkspaceId = new Guid(workspaceId);
-            var viewModel = this.powerBiServiceApi.GetDashboardEmbeddingData(dashboarddid, Tenant).Result;
+            var viewModel = this.powerBiServiceApi.GetDashboardEmbeddingData(dashboarddid,Tenant).Result;
             return View(viewModel);
         }
 
@@ -118,6 +118,16 @@ namespace OneIdentityAnalytics.Controllers
         public IActionResult Users()
         {
             var model = AppOwnsDataDBService.GetUsers();
+            return View(model);
+        }
+        public IActionResult Persons()
+        {
+            var model = AppOwnsDataDBService.GetPersons();
+            return View(model);
+        }
+        public IActionResult PersonInAERole()
+        {
+            var model = AppOwnsDataDBService.GetPersonInAERole();
             return View(model);
         }
         public IActionResult GetUser(string LoginId)

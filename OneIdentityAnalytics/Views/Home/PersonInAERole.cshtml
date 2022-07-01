@@ -1,0 +1,28 @@
+﻿@model IList<OneIdentityAnalyticsShared.Models.PersonInAERole>
+
+<H2>Persons in AERole</H2>
+
+
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>UID Person</th>
+            <th>UID Person In AERole</th>
+            <th>XObjectKey/th>
+
+        </tr>
+    </thead>
+    @foreach (var person in Model)
+    {
+<tr>
+    <td>@person.UID_Person</td>
+    <td>@person.UID_AERole</td>
+    <td>@person.XObjectKey</td>
+
+
+
+
+</tr>
+}
+</table>

@@ -10,8 +10,8 @@ using OneIdentityAnalyticsShared.Models;
 namespace OneIdentityAnalyticsShared.Migrations
 {
     [DbContext(typeof(OneIdentityAnalyticsDB))]
-    [Migration("20220623134954_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220630100910_SEACDEV01")]
+    partial class SEACDEV01
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -73,6 +73,22 @@ namespace OneIdentityAnalyticsShared.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ActivityLog");
+                });
+
+            modelBuilder.Entity("OneIdentityAnalyticsShared.Models.Person", b =>
+                {
+                    b.Property<string>("UID_Person")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UID_Person");
+
+                    b.ToTable("Person");
                 });
 
             modelBuilder.Entity("OneIdentityAnalyticsShared.Models.PowerBiTenant", b =>

@@ -39,18 +39,17 @@ namespace OneIdentityAnalytics.Services
         public string Token { get; set; }
 
     }
-    public class PowerBiTenantDetails : PowerBiTenant
+    public class PowerBiTenantDetails : PowerBiTenant 
     {
         public IList<Report> Reports { get; set; }
         public IList<Dataset> Datasets { get; set; }
         public IList<GroupUser> Members { get; set; }
         public IList<Dashboard> Dashboard { get; set; }
-        
-        
-
+        public IList<User> Users { get; set; }
+      //  public IList<Person> Persons { get; set; }
     }
 
-    public class PowerBiServiceApi
+    public class PowerBiServiceApi 
     {
 
         private readonly OneIdentityAnalyticsDBService OneIdentityAnalyticsDBService;
@@ -214,7 +213,9 @@ namespace OneIdentityAnalytics.Services
                 Members = pbiClient.Groups.GetGroupUsers(new Guid(tenant.WorkspaceId)).Value,
                 Datasets = pbiClient.Datasets.GetDatasetsInGroup(new Guid(tenant.WorkspaceId)).Value,
                 Reports = pbiClient.Reports.GetReportsInGroup(new Guid(tenant.WorkspaceId)).Value,
-                Dashboard = pbiClient.Dashboards.GetDashboardsInGroup(new Guid(tenant.WorkspaceId)).Value
+                Dashboard = pbiClient.Dashboards.GetDashboardsInGroup(new Guid(tenant.WorkspaceId)).Value,
+                
+                
 
             };
 
@@ -351,9 +352,5 @@ namespace OneIdentityAnalytics.Services
             };
 
         }
-
-
-
     }
-
-}
+} 

@@ -73,6 +73,22 @@ namespace OneIdentityAnalyticsShared.Migrations
                     b.ToTable("ActivityLog");
                 });
 
+            modelBuilder.Entity("OneIdentityAnalyticsShared.Models.Person", b =>
+                {
+                    b.Property<string>("UID_Person")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UID_Person");
+
+                    b.ToTable("Person");
+                });
+
             modelBuilder.Entity("OneIdentityAnalyticsShared.Models.PowerBiTenant", b =>
                 {
                     b.Property<string>("Name")

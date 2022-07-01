@@ -55,6 +55,27 @@
     <div class="container-tabs">
 
         <div class="tab-members">
+            <h4>Users</h4>
+            <table class="table table-sm table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="text-align:center">User Name</th>
+                        <th style="text-align:center">Creation Permissions</th>
+                        <th style="text-align:center">Edit Permissions</th>
+                    </tr>
+                </thead>
+                @foreach (var user in  Model.Users)
+                {
+    <tr>
+        <td style="text-align:center">@user.UserName</td>
+        <td style="text-align:center">@user.CanCreate</td>
+        <td style="text-align:center">@user.CanEdit</td>
+    </tr>
+}
+            </table>
+        </div>
+
+        <div class="tab-members">
             <h4>Members</h4>
             <table class="table table-sm table-bordered table-striped">
                 <thead class="thead-dark">
@@ -70,7 +91,8 @@
         <td style="text-align:center">@member.DisplayName</td>
         <td style="text-align:center">@member.GroupUserAccessRight</td>
         <td style="text-align:center">@member.PrincipalType.Value</td>
-    </tr>}
+    </tr>
+}
             </table>
         </div>
 
@@ -90,7 +112,8 @@
         <td style="text-align:center">@dataset.Name</td>
         <td style="text-align:center">@dataset.IsRefreshable</td>
         <td style="text-align:center">@dataset.Id</td>
-    </tr>}
+    </tr>
+}
             </table>
         </div>
 
@@ -114,8 +137,9 @@
         <td style="text-align:center">@report.Name</td>
         <td style="text-align:center">@report.ReportType</td>
         <td style="text-align:center">@report.Id</td>
-        <td style="text-align:center"><a href="~/Home/Embed/?ReportId=@report.Id&Tenant=@Model.Name" class="nav nav-link" target="_blank"><i class="fa fa-bar-chart"/></a></td>
-    </tr>}
+        <td style="text-align:center"><a href="~/Home/Embed/?ReportId=@report.Id&Tenant=@Model.Name" class="nav nav-link" target="_blank"><i class="fa fa-bar-chart" /></a></td>
+    </tr>
+}
             </table>
 
             <div class="tab-dash">
@@ -135,8 +159,7 @@
             <td style="text-align:center">@dashbord.Id</td>
             <td style="text-align:center"><a href="~/Home/EmbedDash/?DashboardId=@dashbord.Id&?Dashboard=@Model.Dashboard&Tenant=@Model.Name" class="nav nav-link" target="_blank"><i class="fa fa-bar-chart"></a></td>
 
-        </tr>
-}
+        </tr>}
                 </table>
 
             </div>
