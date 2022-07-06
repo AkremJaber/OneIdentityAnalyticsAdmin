@@ -1,7 +1,6 @@
 ﻿@using System.Security.Principal
 
-@if (User.Identity.IsAuthenticated)
-{
+@if (User.Identity.IsAuthenticated){
 <div class="jumbotron">
     <h1>Welcome @User.FindFirst("name").Value</h1>
 

@@ -22,12 +22,12 @@
   </thead>
   @foreach (var tenant in Model) {
     <tr>
-      <td>@tenant.Name</td>
-      <td>@tenant.WorkspaceId</td>
+      <td>@tenant.CCC_Name</td>
+      <td>@tenant.CCC_WorkspaceId</td>
       
-      <td style="text-align:center"><a href="@tenant.WorkspaceUrl" class="nav nav-link" target="_blank"><i class="fa fa-line-chart"></a></td>
-      <td style="text-align:center"><a href="Tenant/?Name=@tenant.Name" class="nav nav-link"><i class="fa fa-binoculars"></i></a></td>
-      <td style="text-align:center"><a href="DeleteTenant/?TenantName=@tenant.Name" class="nav nav-link"><i class="fa fa-remove"></i></a></td>
+      <td style="text-align:center"><a href="@tenant.CCC_WorkspaceUrl" class="nav nav-link" target="_blank"><i class="fa fa-line-chart"></a></td>
+      <td style="text-align:center"><a href="Tenant/?Name=@tenant.CCC_Name" class="nav nav-link"><i class="fa fa-binoculars"></i></a></td>
+      <td style="text-align:center"><a href="DeleteTenant/?TenantName=@tenant.CCC_Name" class="nav nav-link"><i class="fa fa-remove"></i></a></td>
     </tr>
   }
 </table>

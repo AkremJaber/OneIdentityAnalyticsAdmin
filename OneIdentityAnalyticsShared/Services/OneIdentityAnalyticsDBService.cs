@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +13,7 @@ namespace OneIdentityAnalyticsShared.Services
         {
 
         private readonly OneIdentityAnalyticsDB dbContext;
-
+         
         public OneIdentityAnalyticsDBService(OneIdentityAnalyticsDB dbContext)
         {
             this.dbContext = dbContext;
@@ -21,7 +21,7 @@ namespace OneIdentityAnalyticsShared.Services
 
         public string GetNextTenantName()
         {
-            var appNames = dbContext.Tenants.Select(tenant => tenant.Name).ToList();
+            var appNames = dbContext.CCCTenants.Select(tenant => tenant.CCC_Name).ToList();
             string baseName = "Tenant";
             string nextName;
             int counter = 0;
@@ -36,21 +36,21 @@ namespace OneIdentityAnalyticsShared.Services
 
         public void OnboardNewTenant(PowerBiTenant tenant)
         {
-            dbContext.Tenants.Add(tenant);
+            dbContext.CCCTenants.Add(tenant);
             dbContext.SaveChanges();
         }
 
         public IList<PowerBiTenant> GetTenants()
         {
-            return dbContext.Tenants
+            return dbContext.CCCTenants
                    .Select(tenant => tenant)
-                   .OrderBy(tenant => tenant.Name)
+                   .OrderBy(tenant => tenant.CCC_Name)
                    .ToList();
         }
 
         public PowerBiTenant GetTenant(string TenantName)
         {
-            var tenant = dbContext.Tenants.Where(tenant => tenant.Name == TenantName).FirstOrDefault();
+            var tenant = dbContext.CCCTenants.Where(tenant => tenant.CCC_Name == TenantName).FirstOrDefault();
             return tenant;
         }
 
@@ -58,7 +58,7 @@ namespace OneIdentityAnalyticsShared.Services
         {
 
             // unassign any users in the tenant
-            var tenantUsers = dbContext.Users.Where(user => user.TenantName == tenant.Name);
+            var tenantUsers = dbContext.Users.Where(user => user.TenantName == tenant.CCC_Name);
             foreach (var user in tenantUsers)
             {
                 user.TenantName = "";
@@ -67,7 +67,7 @@ namespace OneIdentityAnalyticsShared.Services
             dbContext.SaveChanges();
 
             // delete the tenant
-            dbContext.Tenants.Remove(tenant);
+            dbContext.CCCTenants.Remove(tenant);
             dbContext.SaveChanges();
             return;
         }
@@ -165,7 +165,7 @@ namespace OneIdentityAnalyticsShared.Services
         public ActivityLogEntry PostActivityLogEntry(ActivityLogEntry activityLogEntry)
         {
             activityLogEntry.Created = DateTime.Now;
-            activityLogEntry.WorkspaceId = (dbContext.Tenants.Where(tenant => tenant.Name == activityLogEntry.Tenant).First()).WorkspaceId;
+            activityLogEntry.WorkspaceId = (dbContext.CCCTenants.Where(tenant => tenant.CCC_Name == activityLogEntry.Tenant).First()).CCC_WorkspaceId;
             dbContext.ActivityLog.Add(activityLogEntry);
             dbContext.SaveChanges();
             return activityLogEntry;

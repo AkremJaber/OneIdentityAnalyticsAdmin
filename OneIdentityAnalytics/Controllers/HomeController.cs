@@ -14,7 +14,7 @@ using OneIdentityAnalytics.Services;
 namespace OneIdentityAnalytics.Controllers
 {
 
-    [Authorize]
+    
     public class HomeController : Controller
     {
 
@@ -27,12 +27,12 @@ namespace OneIdentityAnalytics.Controllers
             this.AppOwnsDataDBService = AppOwnsDataDBService;
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
-
+        //[Authorize(Roles ="Admin")]
         public IActionResult Tenants()
         {
             var model = AppOwnsDataDBService.GetTenants();
@@ -49,6 +49,9 @@ namespace OneIdentityAnalytics.Controllers
         public class OnboardTenantModel
         {
             public string TenantName { get; set; }
+            public string UID_CCCTenants { get; set; }
+            public string XObjectKey { get; set; }
+
             public string SuggestedDatabase { get; set; }
             public List<SelectListItem> DatabaseOptions { get; set; }
             public string SuggestedAppIdentity { get; set; }
@@ -73,16 +76,19 @@ namespace OneIdentityAnalytics.Controllers
         }
 
         [HttpPost]
-        public IActionResult OnboardTenant(string TenantName, string DatabaseServer, string DatabaseName, string DatabaseUserName, string DatabaseUserPassword)
+        public IActionResult OnboardTenant(string TenantName,string DatabaseServer, string DatabaseName, string DatabaseUserName, string DatabaseUserPassword)
         {
-
+            var ccc = System.Guid.NewGuid().ToString();
+            var xobj = "<Key><T>CCCTenants</T><P>"+ccc+"</P></Key>";
             var tenant = new PowerBiTenant
             {
-                Name = TenantName,
-                DatabaseServer = DatabaseServer,
-                DatabaseName = DatabaseName,
-                DatabaseUserName = DatabaseUserName,
-                DatabaseUserPassword = DatabaseUserPassword,
+                CCC_Name = TenantName,
+                UID_CCCTenants=ccc,
+                XObjectKey=xobj,
+                CCC_DatabaseServer = DatabaseServer,
+                CCC_DatabaseName = DatabaseName,
+                CCC_DatabaseUserName = DatabaseUserName,
+                CCC_DatabaseUserPassword = DatabaseUserPassword,
             };
 
             tenant = this.powerBiServiceApi.OnboardNewTenant(tenant);
@@ -149,8 +155,8 @@ namespace OneIdentityAnalytics.Controllers
                 User = AppOwnsDataDBService.GetUser(LoginId),
                 TenantOptions = this.AppOwnsDataDBService.GetTenants().Select(tenant => new SelectListItem
                 {
-                    Text = tenant.Name,
-                    Value = tenant.Name
+                    Text = tenant.CCC_Name,
+                    Value = tenant.CCC_Name
                 }).ToList(),
             };
             return View(model);
@@ -176,8 +182,8 @@ namespace OneIdentityAnalytics.Controllers
             {
                 TenantOptions = this.AppOwnsDataDBService.GetTenants().Select(tenant => new SelectListItem
                 {
-                    Text = tenant.Name,
-                    Value = tenant.Name
+                    Text = tenant.CCC_Name,
+                    Value = tenant.CCC_Name
                 }).ToList(),
             };
             return View(model);

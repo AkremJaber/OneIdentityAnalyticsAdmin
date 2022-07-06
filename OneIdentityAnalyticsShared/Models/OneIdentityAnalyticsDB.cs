@@ -13,13 +13,15 @@ namespace OneIdentityAnalyticsShared.Models
     public class PowerBiTenant
     {
         [Key]
-        public string Name { get; set; }
-        public string WorkspaceId { get; set; }
-        public string WorkspaceUrl { get; set; }
-        public string DatabaseServer { get; set; }
-        public string DatabaseName { get; set; }
-        public string DatabaseUserName { get; set; }
-        public string DatabaseUserPassword { get; set; }
+        public string CCC_Name { get; set; }
+        public string CCC_WorkspaceId { get; set; }
+        public string CCC_WorkspaceUrl { get; set; }
+        public string CCC_DatabaseServer { get; set; }
+        public string CCC_DatabaseName { get; set; }
+        public string CCC_DatabaseUserName { get; set; }
+        public string CCC_DatabaseUserPassword { get; set; }
+        public string UID_CCCTenants { get; set; }
+        public string XObjectKey { get; set; }
     }
 
     public class Person
@@ -28,6 +30,8 @@ namespace OneIdentityAnalyticsShared.Models
         public string UID_Person { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+
     }
     public class PersonInAERole
     {
@@ -71,12 +75,11 @@ namespace OneIdentityAnalyticsShared.Models
     {
         public OneIdentityAnalyticsDB(DbContextOptions<OneIdentityAnalyticsDB> options) : base(options) { }
 
-        public DbSet<PowerBiTenant> Tenants { get; set; }
+        public DbSet<PowerBiTenant> CCCTenants { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Person> Person { get; set; }
         public DbSet<PersonInAERole> PersonInAERole { get; set; }
-
-        public DbSet<ActivityLogEntry> ActivityLog { get; set; }
+       public DbSet<ActivityLogEntry> ActivityLog { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

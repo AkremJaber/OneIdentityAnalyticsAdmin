@@ -46,6 +46,7 @@ namespace OneIdentityAnalytics.Services
         public IList<GroupUser> Members { get; set; }
         public IList<Dashboard> Dashboard { get; set; }
         public IList<User> Users { get; set; }
+        public IList<Person> Person { get; set; }
       //  public IList<Person> Persons { get; set; }
     }
 
@@ -155,11 +156,11 @@ namespace OneIdentityAnalytics.Services
             PowerBIClient pbiClient = this.GetPowerBiClient();
 
             // create new app workspace
-            GroupCreationRequest request = new GroupCreationRequest(tenant.Name);
+            GroupCreationRequest request = new GroupCreationRequest(tenant.CCC_Name);
             Group workspace = pbiClient.Groups.CreateGroup(request);
 
-            tenant.WorkspaceId = workspace.Id.ToString();
-            tenant.WorkspaceUrl = "https://app.powerbi.com/groups/" + workspace.Id.ToString() + "/";
+            tenant.CCC_WorkspaceId = workspace.Id.ToString();
+            tenant.CCC_WorkspaceUrl = "https://app.powerbi.com/groups/" + workspace.Id.ToString() + "/";
 
             // add user as new workspace admin to make demoing easier
             string adminUser = Configuration["DemoSettings:AdminUser"];
@@ -203,17 +204,17 @@ namespace OneIdentityAnalytics.Services
 
             return new PowerBiTenantDetails
             {
-                Name = tenant.Name,
-                DatabaseName = tenant.DatabaseName,
-                DatabaseServer = tenant.DatabaseServer,
-                DatabaseUserName = tenant.DatabaseUserName,
-                DatabaseUserPassword = tenant.DatabaseUserPassword,
-                WorkspaceId = tenant.WorkspaceId,
-                WorkspaceUrl = tenant.WorkspaceUrl,
-                Members = pbiClient.Groups.GetGroupUsers(new Guid(tenant.WorkspaceId)).Value,
-                Datasets = pbiClient.Datasets.GetDatasetsInGroup(new Guid(tenant.WorkspaceId)).Value,
-                Reports = pbiClient.Reports.GetReportsInGroup(new Guid(tenant.WorkspaceId)).Value,
-                Dashboard = pbiClient.Dashboards.GetDashboardsInGroup(new Guid(tenant.WorkspaceId)).Value,
+                CCC_Name = tenant.CCC_Name,
+                CCC_DatabaseName = tenant.CCC_DatabaseName,
+                CCC_DatabaseServer = tenant.CCC_DatabaseServer,
+                CCC_DatabaseUserName = tenant.CCC_DatabaseUserName,
+                CCC_DatabaseUserPassword = tenant.CCC_DatabaseUserPassword,
+                CCC_WorkspaceId = tenant.CCC_WorkspaceId,
+                CCC_WorkspaceUrl = tenant.CCC_WorkspaceUrl,
+                Members = pbiClient.Groups.GetGroupUsers(new Guid(tenant.CCC_WorkspaceId)).Value,
+                Datasets = pbiClient.Datasets.GetDatasetsInGroup(new Guid(tenant.CCC_WorkspaceId)).Value,
+                Reports = pbiClient.Reports.GetReportsInGroup(new Guid(tenant.CCC_WorkspaceId)).Value,
+                Dashboard = pbiClient.Dashboards.GetDashboardsInGroup(new Guid(tenant.CCC_WorkspaceId)).Value,
                 
                 
 
@@ -225,7 +226,7 @@ namespace OneIdentityAnalytics.Services
         {
 
             // create new app workspace
-            GroupCreationRequest request = new GroupCreationRequest(tenant.Name);
+            GroupCreationRequest request = new GroupCreationRequest(tenant.CCC_Name);
             Group workspace = pbiClient.Groups.CreateGroup(request);
 
             // add user as new workspace admin to make demoing easier
@@ -239,7 +240,7 @@ namespace OneIdentityAnalytics.Services
                 });
             }
 
-            tenant.WorkspaceId = workspace.Id.ToString();
+            tenant.CCC_WorkspaceId = workspace.Id.ToString();
 
             return tenant;
         }
@@ -247,7 +248,7 @@ namespace OneIdentityAnalytics.Services
         public void DeleteWorkspace(PowerBiTenant tenant)
         {
             PowerBIClient pbiClient = this.GetPowerBiClient();
-            Guid workspaceIdGuid = new Guid(tenant.WorkspaceId);
+            Guid workspaceIdGuid = new Guid(tenant.CCC_WorkspaceId);
             pbiClient.Groups.DeleteGroup(workspaceIdGuid);
         }
 
@@ -299,7 +300,7 @@ namespace OneIdentityAnalytics.Services
             PowerBIClient pbiClient = GetPowerBiClient();
 
             var tenant = this.OneIdentityAnalyticsDBService.GetTenant(Tenant);
-            Guid workspaceId = new Guid(tenant.WorkspaceId);
+            Guid workspaceId = new Guid(tenant.CCC_WorkspaceId);
             //var reports = (await pbiClient.Reports.GetReportsInGroupAsync(workspaceId)).Value;
 
             var report = pbiClient.Reports.GetReport(workspaceId, ReportId);
@@ -328,7 +329,7 @@ namespace OneIdentityAnalytics.Services
              var tenant = this.OneIdentityAnalyticsDBService.GetTenant(Tenant);
 
             //workspaceId = new Guid("f1e6d5b1-f653-465e-8858-a65a015c5446");
-             Guid workspaceId = new Guid(tenant.WorkspaceId);
+             Guid workspaceId = new Guid(tenant.CCC_WorkspaceId);
             //var dashboards = (await pbiClient.Dashboards.GetDashboardsInGroupAsync(workspaceId));
             //var report = reports.Where(report => report.Name.Equals("Person_roles")).First();
             var dashboard = pbiClient.Dashboards.GetDashboard(workspaceId, dashboardid);

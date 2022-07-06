@@ -3,7 +3,7 @@
 <ul class="navbar-nav">
   @if (User.Identity.IsAuthenticated) {
     <li class="nav-item">
-      <span id="user-welcome" class="navbar-text text-dark">Welcome @User.FindFirst("name").Value</span>
+        <span id="user-welcome" class="navbar-text text-dark">Welcome @User.FindFirst("name").Value</span>
     </li>
     <li class="nav-item">
       <a class="nav-link text-dark" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignOut">Sign out</a>
